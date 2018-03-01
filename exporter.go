@@ -244,15 +244,18 @@ func (b *Exporter) Listen(e <-chan Events) {
 			return
 		}
 		for _, event := range events {
+			fmt.Printf("event = %#v\n", event)
 			var help string
 			metricName := ""
 			prometheusLabels := event.Labels()
 
+			fmt.Printf("prometheusLabels= %#v\n", prometheusLabels)
 			mapping, labels, present := b.mapper.getMapping(event.MetricName())
 			if mapping == nil {
 				mapping = &metricMapping{}
 			}
 
+			fmt.Printf("labels= %#v\n", labels)
 			if mapping.Action == actionTypeDrop {
 				continue
 			}
